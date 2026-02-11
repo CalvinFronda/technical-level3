@@ -8,72 +8,87 @@ import {
   SimpleGrid,
   Text,
   Title,
-} from "@mantine/core";
-import { IconArrowLeft } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+} from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
+import { Link } from '@tanstack/react-router';
+import { useProduct } from '../hooks/useProducts';
+import { Route } from '../routes/products.$id';
 
 // Hardcoded data for demonstration
 const product = {
   id: 1,
-  title: "Handmade Fresh Table",
+  title: 'Handmade Fresh Table',
   price: 687,
-  description: "Andy shoes are designed to keeping in...",
+  description: 'Andy shoes are designed to keeping in...',
   category: {
     id: 5,
-    name: "Others",
-    image: "https://placehold.co/600x400",
+    name: 'Others',
+    image: 'https://placehold.co/600x400',
   },
   images: [
-    "https://placehold.co/600x400?text=Image+1",
-    "https://placehold.co/600x400?text=Image+2",
-    "https://placehold.co/600x400?text=Image+3",
+    'https://placehold.co/600x400?text=Image+1',
+    'https://placehold.co/600x400?text=Image+2',
+    'https://placehold.co/600x400?text=Image+3',
   ],
 };
 
 export const ProductDetails = () => {
   // TODO: Get product ID from URL
+  const { id } = Route.useParams();
 
   // TODO: Fetch product details
+  const { data, isLoading, error } = useProduct(id);
+
+  if (isLoading) {
+    return (
+      <>
+        <h1>Loading...</h1>
+      </>
+    );
+  }
+
+  const product = data?.data;
+  console.log('Product Detail', data);
 
   return (
-    <Container my="md">
-      <ActionIcon component={Link} to="/" variant="subtle" mb="md">
+    <Container my='md'>
+      <ActionIcon component={Link} to='/' variant='subtle' mb='md'>
         <IconArrowLeft />
       </ActionIcon>
 
-      <Grid gutter="xl">
+      <Grid gutter='xl'>
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Image
             src={product.images[0]}
-            radius="md"
+            radius='md'
             alt={product.title}
             h={400}
-            w="100%"
-            fit="cover"
-            mb="sm"
+            w='100%'
+            fit='cover'
+            mb='sm'
           />
           <SimpleGrid cols={3}>
             {product.images.map((img, index) => (
-              <Image key={index} src={img} radius="sm" h={80} fit="cover" />
+              <Image key={index} src={img} radius='sm' h={80} fit='cover' />
             ))}
           </SimpleGrid>
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 6 }}>
-          <Group justify="space-between" align="center">
-            <Badge size="lg" variant="filled" color="blue">
+          <Group justify='space-between' align='center'>
+            <Badge size='lg' variant='filled' color='blue'>
               {product.category.name}
             </Badge>
-            <Text size="xl" fw={700} c="blue">
+            <Text size='xl' fw={700} c='blue'>
               ${product.price}
             </Text>
           </Group>
 
-          <Title order={1} mt="xs">
+          <Title order={1} mt='xs'>
             {product.title}
           </Title>
 
-          <Text c="dimmed" mt="md">
+          <Text c='dimmed' mt='md'>
             {product.description}
           </Text>
         </Grid.Col>
