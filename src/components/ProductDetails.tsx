@@ -10,7 +10,10 @@ import {
   Title,
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
+import { fetchSingleProducts } from "../services/api";
+import { useProducts } from "../hooks/useProducts";
+
 
 // Hardcoded data for demonstration
 const product = {
@@ -32,8 +35,10 @@ const product = {
 
 export const ProductDetails = () => {
   // TODO: Get product ID from URL
+  const { id } = useParams({ from: '/products/$id' })
 
   // TODO: Fetch product details
+  const { data:product } = useProducts(id);
 
   return (
     <Container my="md">
