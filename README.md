@@ -30,7 +30,7 @@ The tech uses **React**, **TypeScript**, **Vite**, **TanStack Query**, **TanStac
 
 -   **API DOCS** `https://fakeapi.platzi.com/en/rest/products/`
 -   **List**: `GET https://api.escuelajs.co/api/v1/products` (Already implemented in `useProducts`)
--   **Single**: `GET https://api.escuelajs.co/api/v1/products/:id`
+-   **Single**: `GET https://api.escuelajs.co/api/v1/products/1`
 
 ## Guidelines
 
