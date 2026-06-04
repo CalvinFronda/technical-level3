@@ -11,7 +11,8 @@ import {
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
-
+import { useParams } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 // Hardcoded data for demonstration
 const product = {
   id: 1,
@@ -31,9 +32,37 @@ const product = {
 };
 
 export const ProductDetails = () => {
+  const [data, setData] = useState([]);
+
+  // const api = "https://api.escuelajs.co/api/v1/products/:id";
   // TODO: Get product ID from URL
+  const { id } = useParams({ from: "/products/$id" });
+  // console.log(id);
 
   // TODO: Fetch product details
+  const fetchProduct = async () => {
+    const API_URL = `https://api.escuelajs.co/api/v1/products/${id}`;
+    try {
+      const response = await fetch(API_URL);
+
+      if (!response.ok) {
+        console.log("data not fetching");
+      }
+
+      const result = response.json();
+      setData(result);
+      console.log(result);
+    } catch (err) {
+      console.log("404");
+    }
+  };
+
+  useEffect(() => {
+    // const data = fetchProduct();
+    // console.log(data);
+    fetchProduct().catch(console.error)
+
+  }, []);
 
   return (
     <Container my="md">
@@ -44,16 +73,16 @@ export const ProductDetails = () => {
       <Grid gutter="xl">
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Image
-            src={product.images[0]}
+            src={data.images[0]}
             radius="md"
-            alt={product.title}
+            alt={data.title}
             h={400}
             w="100%"
             fit="cover"
             mb="sm"
           />
           <SimpleGrid cols={3}>
-            {product.images.map((img, index) => (
+            {data.images.map((img, index) => (
               <Image key={index} src={img} radius="sm" h={80} fit="cover" />
             ))}
           </SimpleGrid>
@@ -62,19 +91,19 @@ export const ProductDetails = () => {
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Group justify="space-between" align="center">
             <Badge size="lg" variant="filled" color="blue">
-              {product.category.name}
+              {data.category.name}
             </Badge>
             <Text size="xl" fw={700} c="blue">
-              ${product.price}
+              ${data.price}
             </Text>
           </Group>
 
           <Title order={1} mt="xs">
-            {product.title}
+            {data.title}
           </Title>
 
           <Text c="dimmed" mt="md">
-            {product.description}
+            {data.description}
           </Text>
         </Grid.Col>
       </Grid>
