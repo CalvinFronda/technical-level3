@@ -11,30 +11,22 @@ import {
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
-
+import { useParams } from "@tanstack/react-router";
+import { fetchProductById } from "../services/api";
+import { useProduct } from "../hooks/useProducts";
 // Hardcoded data for demonstration
-const product = {
-  id: 1,
-  title: "Handmade Fresh Table",
-  price: 687,
-  description: "Andy shoes are designed to keeping in...",
-  category: {
-    id: 5,
-    name: "Others",
-    image: "https://placehold.co/600x400",
-  },
-  images: [
-    "https://placehold.co/600x400?text=Image+1",
-    "https://placehold.co/600x400?text=Image+2",
-    "https://placehold.co/600x400?text=Image+3",
-  ],
-};
+
 
 export const ProductDetails = () => {
   // TODO: Get product ID from URL
-
+  const params = useParams({ from: '/products/$id' })
   // TODO: Fetch product details
-
+  const {data, isLoading} = useProduct(params.id);
+  if(isLoading){
+    return <div> loading</div>
+  }
+  const product = data?.data || [];
+  console.log(product)
   return (
     <Container my="md">
       <ActionIcon component={Link} to="/" variant="subtle" mb="md">

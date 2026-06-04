@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 
 import { Link } from "@tanstack/react-router";
+import { useProducts } from "../hooks/useProducts";
 
 const products = [
   {
@@ -38,11 +39,12 @@ const products = [
 
 export const ProductList = () => {
   // TODO: use the useProducts hook to fetch the data
-
+  const {data } = useProducts();
+  console.log(data)
   return (
     <div className="p-5">
       <SimpleGrid cols={{ base: 1, sm: 3, lg: 5 }} spacing="xl">
-        {products.map((product: any) => (
+        {data?.data.map((product: any) => (
           <Card
             key={product.id}
             shadow="sm"
