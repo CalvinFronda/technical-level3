@@ -9,36 +9,45 @@ import {
 } from "@mantine/core";
 
 import { Link } from "@tanstack/react-router";
+import { useProducts } from "../hooks/useProducts";
 
-const products = [
-  {
-    id: 23,
-    title: "Sleek Modern Laptop with Ambient Lighting",
-    slug: "sleek-modern-laptop-with-ambient-lighting",
-    price: 43,
-    description:
-      "Experience next-level computing with our ultra-slim laptop, featuring a stunning display illuminated by ambient lighting. This high-performance machine is perfect for both work and play, delivering powerful processing in a sleek, portable design. The vibrant colors add a touch of personality to your tech collection, making it as stylish as it is functional.",
-    category: {
-      id: 2,
-      name: "Electronics",
-      slug: "electronics",
-      image: "https://i.imgur.com/ZANVnHE.jpeg",
-      creationAt: "2026-02-06T07:46:10.000Z",
-      updatedAt: "2026-02-06T07:46:10.000Z",
-    },
-    images: [
-      "https://i.imgur.com/OKn1KFI.jpeg",
-      "https://i.imgur.com/G4f21Ai.jpeg",
-      "https://i.imgur.com/Z9oKRVJ.jpeg",
-    ],
-    creationAt: "2026-02-06T07:46:10.000Z",
-    updatedAt: "2026-02-06T07:46:10.000Z",
-  },
-];
+// const products = [
+//   {
+//     id: 23,
+//     title: "Sleek Modern Laptop with Ambient Lighting",
+//     slug: "sleek-modern-laptop-with-ambient-lighting",
+//     price: 43,
+//     description:
+//       "Experience next-level computing with our ultra-slim laptop, featuring a stunning display illuminated by ambient lighting. This high-performance machine is perfect for both work and play, delivering powerful processing in a sleek, portable design. The vibrant colors add a touch of personality to your tech collection, making it as stylish as it is functional.",
+//     category: {
+//       id: 2,
+//       name: "Electronics",
+//       slug: "electronics",
+//       image: "https://i.imgur.com/ZANVnHE.jpeg",
+//       creationAt: "2026-02-06T07:46:10.000Z",
+//       updatedAt: "2026-02-06T07:46:10.000Z",
+//     },
+//     images: [
+//       "https://i.imgur.com/OKn1KFI.jpeg",
+//       "https://i.imgur.com/G4f21Ai.jpeg",
+//       "https://i.imgur.com/Z9oKRVJ.jpeg",
+//     ],
+//     creationAt: "2026-02-06T07:46:10.000Z",
+//     updatedAt: "2026-02-06T07:46:10.000Z",
+//   },
+// ];
+
+
 
 export const ProductList = () => {
   // TODO: use the useProducts hook to fetch the data
 
+  const {data} = useProducts();
+  const products = data || [];
+  
+  console.log(products)
+  // console.log(data)
+  
   return (
     <div className="p-5">
       <SimpleGrid cols={{ base: 1, sm: 3, lg: 5 }} spacing="xl">
