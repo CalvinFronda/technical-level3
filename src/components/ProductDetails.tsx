@@ -10,29 +10,45 @@ import {
   Title,
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
+import {useProduct} from '../hooks/useProducts'
+
 
 // Hardcoded data for demonstration
-const product = {
-  id: 1,
-  title: "Handmade Fresh Table",
-  price: 687,
-  description: "Andy shoes are designed to keeping in...",
-  category: {
-    id: 5,
-    name: "Others",
-    image: "https://placehold.co/600x400",
-  },
-  images: [
-    "https://placehold.co/600x400?text=Image+1",
-    "https://placehold.co/600x400?text=Image+2",
-    "https://placehold.co/600x400?text=Image+3",
-  ],
-};
+// const product = {
+//   id: 1,
+//   title: "Handmade Fresh Table",
+//   price: 687,
+//   description: "Andy shoes are designed to keeping in...",
+//   category: {
+//     id: 5,
+//     name: "Others",
+//     image: "https://placehold.co/600x400",
+//   },
+//   images: [
+//     "https://placehold.co/600x400?text=Image+1",
+//     "https://placehold.co/600x400?text=Image+2",
+//     "https://placehold.co/600x400?text=Image+3",
+//   ],
+// };
 
 export const ProductDetails = () => {
-  // TODO: Get product ID from URL
 
+  const postId = useParams({
+    from: '/products/$id',
+    select: (params) => params.id,
+  }) 
+
+  const {data, isLoading, error} = useProduct(postId)
+  console.log(data)
+  const product = data?.data 
+  // TODO: Get product ID from URL
+  if(isLoading){
+    return <div>Loading...</div>
+  }
+  if(error){
+    return <div>Something went wrong...</div>
+  }
   // TODO: Fetch product details
 
   return (
