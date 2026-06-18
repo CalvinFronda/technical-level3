@@ -11,6 +11,8 @@ import {
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
+import { useParams } from "@tanstack/react-router";
+import { useSingleProduct } from "../hooks/useProducts";
 
 // Hardcoded data for demonstration
 const product = {
@@ -32,9 +34,12 @@ const product = {
 
 export const ProductDetails = () => {
   // TODO: Get product ID from URL
-
+  const params = useParams({ from: '/products/$id'});
+  const {data} = useSingleProduct(params.id);
   // TODO: Fetch product details
-
+  console.log(data);
+  // const product = data || null;
+  console.log(data)
   return (
     <Container my="md">
       <ActionIcon component={Link} to="/" variant="subtle" mb="md">
